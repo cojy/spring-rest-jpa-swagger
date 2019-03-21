@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+
+	<display-name>CJO MVC Application</display-name>
+
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>
+         org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+      </param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>fr.aspr</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+    <servlet>
+        <servlet-name>spring-ws</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>spring-ws</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>
