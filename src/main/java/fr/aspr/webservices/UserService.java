@@ -1,16 +1,22 @@
 package fr.aspr.webservices;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.common.collect.Lists;
 
 import fr.aspr.exceptions.ForbiddenException;
 import fr.aspr.model.User;
@@ -22,11 +28,11 @@ public class UserService {
 
 	@Autowired
 	private UserRepository ur;
-	
+		
 	@CrossOrigin
-	@GetMapping("/")
-	public Iterable<User> getAllUsers() {
-		return ur.findAll();
+	@PostMapping
+	public User saveUser(@RequestBody User user) {
+		return ur.save(user);
 	}
 	
 	@CrossOrigin
@@ -41,12 +47,25 @@ public class UserService {
 	}
 	
 	@CrossOrigin
+	@DeleteMapping("/{id}")
+	public void deleteUser(@PathVariable("id") long id) {
+		ur.deleteById(id);
+	}	
+	
+	
+	@CrossOrigin
 	@GetMapping
-	public User getByName(
-			@RequestParam(value="name", required=true) String name) {
+	public List<User> getByName(
+			@RequestParam(value="name", required=true) String name,
+			@RequestParam(value="id", required=false) long id) {
 		
-		//this will not happen, it's an example if the name had required=false
-		if(name ==null || name.isEmpty())
+		if(name ==null || name.isEmpty()) {
+			Iterable<User> itU = ur.findAll();
+			return Lists.newArrayList(itU);
+		}
+		
+		//for reference on error throwing
+		if(id!=0)
 			throw new ForbiddenException();
 		
 		return ur.findByName(name);		

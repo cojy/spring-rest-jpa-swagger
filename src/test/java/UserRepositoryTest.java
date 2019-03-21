@@ -2,6 +2,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,9 @@ public class UserRepositoryTest {
     @Test
     public void testFetchData(){
         /*Test data retrieval*/
-        User userA = userRepository.findByName("Bob");
+        List<User> userA = userRepository.findByName("Bob");
         assertNotNull(userA);
-        assertEquals(38, userA.getAge());
+        assertEquals(38, userA.get(0).getAge());
         /*Get all products, list should only have two*/
         Iterable<User> users = userRepository.findAll();
         int count = 0;
