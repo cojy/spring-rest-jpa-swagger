@@ -1,1 +1,1 @@
-Amicale des Sapeurs-Pompiers de Rennes
+Example of simple spring-rest-swagger-jpa to init projects
