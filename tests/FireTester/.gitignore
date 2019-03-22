@@ -1,0 +1,6 @@
+/.gradle/
+/bin/
+/build/classes/
+/build/distribution/
+/build/scipts/
+/build/tmp/

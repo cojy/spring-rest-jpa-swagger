@@ -1,0 +1,18 @@
+docker:
+  script:
+  - sudo docker build -t aspr:0.1 .
+start:
+  script:
+  - sudo docker run -d --rm --name mariadb -e MYSQL_ROOT_PASSWORD=root mariadb:10.4.3-bionic
+  - sleep 20
+  - sudo docker exec mariadb mysql --user=root --password=root -e "create database aspr"
+  - sudo docker run -d --rm --name aspr --link mariadb:mariadb -p9080:8080 aspr:0.1
+test:
+  script:
+  - sleep 40
+  - java -jar tests/FireTester/build/libs/FireTester.jar
+cleanup:
+  script:
+  - sleep 2
+  - sudo docker stop mariadb aspr
+

@@ -5,7 +5,6 @@ import java.util.Collections;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-import org.hibernate.dialect.MariaDB103Dialect;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -40,8 +39,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan
 public class SpringConfiguration implements WebMvcConfigurer{
 	
-	@Value( "${test}" )
+	@Value( "${spring.datasource.url}" )
 	private String jdbcUrl;
+	@Value( "${spring.datasource.username}" )
+	private String dbUser;
+	@Value( "${spring.datasource.password}" )
+	private String dbPassword;
 	
 	@Bean
     public Docket api() { 
@@ -64,11 +67,11 @@ public class SpringConfiguration implements WebMvcConfigurer{
 	
 	private ApiInfo apiInfo() {
 	    return new ApiInfo(
-	      "My REST API", 
-	      "Some custom description of API.", 
-	      "API TOS", 
-	      "Terms of service", 
-	      new Contact("John Doe", "www.example.com", "myeaddress@company.com"), 
+	      "ASPR REST API", 
+	      "Principles of REST services", 
+	      "v1", 
+	      "Terms of service: property of Cyril JOUAULT", 
+	      new Contact("Cyril JOUAULT", "www.example.com", "myeaddress@company.com"), 
 	      "License of API", "API license URL", Collections.emptyList());
 	}
 	
@@ -90,9 +93,9 @@ public class SpringConfiguration implements WebMvcConfigurer{
 		final HikariDataSource ds = new HikariDataSource();
         ds.setMaximumPoolSize(20);
         ds.setDriverClassName("org.mariadb.jdbc.Driver");
-        ds.setJdbcUrl("jdbc:mariadb://localhost:3306/aspr");
-        ds.addDataSourceProperty("user", "root");
-        ds.addDataSourceProperty("password", "root");
+        ds.setJdbcUrl(jdbcUrl);
+        ds.addDataSourceProperty("user", dbUser);
+        ds.addDataSourceProperty("password", dbPassword);
         ds.setAutoCommit(false);
 	    
         return ds;
@@ -110,8 +113,6 @@ public class SpringConfiguration implements WebMvcConfigurer{
 	    factory.setPackagesToScan("fr.aspr");
 	    factory.setDataSource(dataSource());
 	    factory.afterPropertiesSet();
-	    
-	    //factory.setJpaDialect("org.hibernate.dialect.MariaDB103Dialect");
 
 	    return factory.getObject();
 	  }

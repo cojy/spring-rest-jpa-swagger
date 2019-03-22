@@ -36,8 +36,8 @@ dependencies {
 	compile group: 'javax.xml.ws', name: 'jaxws-api', version: '2.3.1'
 	// https://mvnrepository.com/artifact/com.sun.xml.messaging.saaj/saaj-impl
 	compile group: 'com.sun.xml.messaging.saaj', name: 'saaj-impl', version: '1.5.1'
-	// https://mvnrepository.com/artifact/javax.persistence/persistence-api
-	compile group: 'javax.persistence', name: 'persistence-api', version: '1.0.2'
+	// https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
+	compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
 	// https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api
 	compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.2.Final'	
 	
